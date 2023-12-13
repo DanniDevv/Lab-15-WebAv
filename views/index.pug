@@ -1,0 +1,155 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Mi Aplicación CRUD
+    style.
+      /* Estilos CSS */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #495057;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      h1, h2 {
+        color: #007bff;
+      }
+
+      table {
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      th, td {
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #007bff;
+        color: #fff;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      form {
+        margin-top: 20px;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+
+      button {
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .btn-success {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+      }
+
+      .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+      }
+
+      .btn-info {
+        background-color: #17a2b8;
+        color: #fff;
+        border: none;
+      }
+    script(src="https://code.jquery.com/jquery-3.6.4.min.js")
+    script.
+      $(document).ready(function() {
+        // Validación básica del lado del cliente con jQuery
+        $("form").submit(function(event) {
+          // Validación del nombre (no vacío)
+          if ($("input[name='nuevoDato']").val().trim() === '') {
+            alert('Nombre no puede estar vacío');
+            event.preventDefault();
+            return;
+          }
+
+          // Validación del apellido (no vacío)
+          if ($("input[name='columna3']").val().trim() === '') {
+            alert('Apellido no puede estar vacío');
+            event.preventDefault();
+            return;
+          }
+
+          // Validación de la edad (debe ser un número)
+          const edad = parseInt($("input[name='columna2']").val());
+          if (isNaN(edad) || edad < 0) {
+            alert('Edad debe ser un número válido');
+            event.preventDefault();
+            return;
+          }
+        });
+      })
+  body
+    .container.mt-5
+      h1 Mi Aplicación CRUD
+      h1 Lista de Alumnos
+
+      table
+        thead
+          tr
+            th Nombre
+            th Apellido
+            th Edad
+            th Acciones
+        tbody
+          each dato in datos
+            tr
+              td= dato.columna1
+              td= dato.columna3
+              td= dato.columna2
+              td
+                a.btn-primary(href="/editar/" + dato.id, role="button") Editar
+                form(action="/eliminar/" + dato.id, method="POST", style="display: inline-block;")
+                  button.btn-danger(type="submit") Eliminar
+                a.btn-info(href=`/alumno/${dato.id}/cursos`) Ver Cursos de #{dato.columna1}
+
+      h2 Agregar nuevo dato
+
+      form(action="/" method="POST")
+        .mb-3
+          label(for="nuevoDato") Nombre
+          input#nuevoDato(type="text", name="nuevoDato", placeholder="Nombre", required)
+        .mb-3
+          label(for="columna3") Apellido
+          input#columna3(type="text", name="columna3", placeholder="Apellido", required)
+        .mb-3
+          label(for="columna2") Edad
+          input#columna2(type="number", name="columna2", placeholder="Edad", required)
+        .mt-3
+          button.btn-success(type="submit") Agregar
+
+      h2 Enlaces rápidos
+        a.btn-primary(href="/cursos") Ver Lista de Cursos

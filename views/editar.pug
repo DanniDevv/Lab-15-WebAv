@@ -1,0 +1,37 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Editar Datos
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css")
+
+  body
+    .container.mt-5
+      h1 Editar Datos
+
+      form(action=`/actualizar/${dato.id}`, method="POST", onsubmit="return validarFormulario(this);")
+        .mb-3
+          label(for="nuevoDato", class="form-label") Nuevo valor para columna1
+          input#nuevoDato.form-control(type="text", name="nuevoDato", placeholder="Ingrese el nuevo valor para columna1", value=dato.columna1, required)
+        .mb-3
+          label(for="columna2", class="form-label") Nuevo valor para columna2
+          input#columna2.form-control(type="number", name="columna2", placeholder="Ingrese el nuevo valor para columna2", value=dato.columna2, required)
+        .mb-3
+          label(for="columna3", class="form-label") Nuevo valor para columna3
+          input#columna3.form-control(type="text", name="columna3", placeholder="Ingrese el nuevo valor para columna3", value=dato.columna3, required)
+        .mt-3
+          button.btn.btn-primary(type="submit") Actualizar
+
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js", integrity="sha384-b4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy0GAPqL1O2gqPejdmVPddM",
+    crossorigin="anonymous")
+
+    script.
+      function validarFormulario(formulario) {
+        if (formulario.nuevoDato.value.trim() === '') {
+          alert('El nuevo valor para columna1 no puede estar vacío');
+          return false;
+        }
+
+        return true;
+      }
